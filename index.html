@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GeoFleet Control</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      // GitHub Pages SPA restore for BrowserRouter.
+      (function () {
+        var params = new URLSearchParams(window.location.search);
+        var p = params.get('p');
+        if (!p) return;
+        var q = params.get('q');
+        var h = params.get('h');
+        var url = p + (q ? decodeURIComponent(q) : '') + (h ? decodeURIComponent(h) : '');
+        window.history.replaceState(null, '', url);
+      })();
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
