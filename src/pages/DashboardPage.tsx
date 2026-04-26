@@ -18,6 +18,12 @@ function statusLabel(state: string, missingReason: string | null) {
   return 'Missing';
 }
 
+function formatFlightTimeMin(min: number) {
+  if (!Number.isFinite(min)) return '—';
+  if (min <= 0) return '<1 min';
+  return `${min.toLocaleString()} min`;
+}
+
 export function DashboardPage() {
   const nav = useNavigate();
   const { updates, eventsPerSecond, lastTickTs, selectedId, setSelectedId } = useFleet();
@@ -227,7 +233,8 @@ export function DashboardPage() {
                     <div className="d-flex flex-column">
                       <span className="fw-semibold">{v.id}</span>
                       <span className="text-muted small">
-                        {v.region ?? '—'} · Flight {v.flightMin.toLocaleString()} min
+                        {v.region ?? '—'} · Flight {formatFlightTimeMin(v.flightMin)} ·{' '}
+                        {(v.routePolyline?.length ?? 0) >= 2 ? 'Маршрут: є' : 'Маршрут: потрібні дані'}
                       </span>
                     </div>
                     <div className="d-flex align-items-center gap-2">

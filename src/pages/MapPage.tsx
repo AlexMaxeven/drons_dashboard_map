@@ -23,15 +23,17 @@ const MISSING_BLINK_PERIOD_MS = 750;
 const POPUP_UI_INTERVAL_MS = 320;
 
 /** Tooltip only (short) — no long copy in panel/popup body. */
-const ROUTE_NO_TRACK_TOOLTIP_UA = 'Трек лише у частини дронів (демо). Не помилка.';
+const ROUTE_NO_TRACK_TOOLTIP_UA =
+  'Для цього дрона ще немає маршруту. Потрібно більше даних / маршрут ще не побудовано (демо: трек є не у всіх).';
 
 /** Only the block that changes every tick — updated in RAF without touching the route button DOM. */
 function renderPopupLiveHtml(u: DemoFleetUpdate): string {
   const missingReason = u.missingReason ?? '';
+  const flight = u.flightMin <= 0 ? '&lt;1' : String(u.flightMin);
   return `Status: <b>${u.state === 'missing' ? 'missing' : 'active'}</b>${missingReason ? ` (${missingReason})` : ''}<br/>
       Speed: <b>${u.speedKmh.toFixed(1)}</b> km/h<br/>
       Region: <b>${u.region || '—'}</b><br/>
-      Flight time: <b>${u.flightMin}</b> min<br/>
+      Flight time: <b>${flight}</b> min<br/>
       Endurance: <b>${u.enduranceMinLeft}</b> / ${u.enduranceMinTotal} min left<br/>
       Updated: ${new Date(u.ts).toLocaleTimeString()}`;
 }
@@ -43,9 +45,8 @@ function renderPopupHtml(u: DemoFleetUpdate, opts: { routeShown: boolean; hasRou
   const disabledAttr = opts.hasRoute ? '' : ' disabled';
   const titleAttr = opts.hasRoute ? '' : ` title="${ROUTE_NO_TRACK_TOOLTIP_UA.replace(/"/g, '&quot;')}"`;
 
-  const routeBtn = `<button type="button" class="btn btn-sm btn-outline-warning w-100 mt-2 fleet-route-btn"${disabledAttr}${titleAttr} data-fleet-route-toggle data-vehicle-id="${routeAttrId}" style="min-height:44px;padding:10px 14px;font-size:14px;touch-action:manipulation">${
-    opts.routeShown ? 'Сховати маршрут' : 'Маршрут'
-  }</button>`;
+  const routeLabel = opts.hasRoute ? (opts.routeShown ? 'Сховати маршрут' : 'Маршрут') : 'Маршрут (немає даних)';
+  const routeBtn = `<button type="button" class="btn btn-sm btn-outline-warning w-100 mt-2 fleet-route-btn"${disabledAttr}${titleAttr} data-fleet-route-toggle data-vehicle-id="${routeAttrId}" style="min-height:44px;padding:10px 14px;font-size:14px;touch-action:manipulation">${routeLabel}</button>`;
 
   return `<div class="fleet-popup-inner" style="min-width:220px;position:relative;z-index:1;pointer-events:auto">
     <div style="font-weight:600">${id}</div>
