@@ -8,7 +8,7 @@ import { ReportsPage } from './pages/ReportsPage';
 export function App() {
   return (
     <FleetProvider>
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <div className="container-fluid px-0">
           <header className="sticky-top border-bottom" style={{ zIndex: 5000 }}>
             <div className="bg-dark">
