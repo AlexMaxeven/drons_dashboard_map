@@ -342,10 +342,6 @@ export function MapPage() {
   }, [styleMenuOpen]);
 
   useEffect(() => {
-    setRouteOverlayId(null);
-  }, [selectedId]);
-
-  useEffect(() => {
     popupUiThrottleRef.current = { lastMs: 0, force: true };
   }, [selectedId]);
 
