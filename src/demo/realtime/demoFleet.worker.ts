@@ -206,7 +206,7 @@ function stepBomber(v: VehicleState, dtSec: number) {
 }
 
 function stepFixedWing(v: VehicleState, dtSec: number, nowTs: number) {
-  // Fixed-wing: long endurance, fast, sometimes loiters.
+  // drone_type_1: long endurance, fast, sometimes loiters.
   if (nowTs < v.stopUntilTs) {
     v.speedMps = 0;
     return;
@@ -225,7 +225,7 @@ function stepFixedWing(v: VehicleState, dtSec: number, nowTs: number) {
 }
 
 function stepMavic(v: VehicleState, dtSec: number, nowTs: number) {
-  // Mavic: slower, can hover often.
+  // drone_type_2: slower, can hover often.
   if (nowTs < v.stopUntilTs) {
     v.speedMps = 0;
     return;

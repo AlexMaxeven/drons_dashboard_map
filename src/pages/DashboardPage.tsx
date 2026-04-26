@@ -8,8 +8,8 @@ import { useFleet } from '../fleet/FleetContext';
 function kindLabel(kind: string) {
   if (kind === 'fpv') return 'FPV';
   if (kind === 'bomber') return 'Bomber';
-  if (kind === 'fixedWing') return 'Fixed‑wing';
-  return 'Mavic';
+  if (kind === 'fixedWing') return 'drone_type_1';
+  return 'drone_type_2';
 }
 
 function statusLabel(state: string, missingReason: string | null) {
@@ -196,8 +196,8 @@ export function DashboardPage() {
                   <option value="all">All</option>
                   <option value="fpv">FPV</option>
                   <option value="bomber">Bomber</option>
-                  <option value="fixedWing">Fixed‑wing</option>
-                  <option value="mavic">Mavic</option>
+                  <option value="fixedWing">drone_type_1</option>
+                  <option value="mavic">drone_type_2</option>
                 </select>
               </div>
               <div className="col-12 col-md-6">

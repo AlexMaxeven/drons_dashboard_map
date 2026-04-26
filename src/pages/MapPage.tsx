@@ -750,7 +750,7 @@ export function MapPage() {
                     onChange={(e) => setEnabledKinds((s) => ({ ...s, fixedWing: e.target.checked }))}
                   />
                   <span style={{ width: 10, height: 10, borderRadius: 99, background: '#0d6efd', display: 'inline-block' }} />
-                  Fixed‑wing (slow, long endurance, can loiter)
+                  drone_type_1 (slow, long endurance, can loiter)
                 </label>
                 <label className="d-flex align-items-center gap-2">
                   <input
@@ -760,7 +760,7 @@ export function MapPage() {
                     onChange={(e) => setEnabledKinds((s) => ({ ...s, mavic: e.target.checked }))}
                   />
                   <span style={{ width: 10, height: 10, borderRadius: 99, background: '#198754', display: 'inline-block' }} />
-                  Mavic (slow, hovers often)
+                  drone_type_2 (slow, hovers often)
                 </label>
               </div>
               {selectedId ? (
