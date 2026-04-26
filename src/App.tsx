@@ -6,9 +6,14 @@ import { MapPage } from './pages/MapPage';
 import { ReportsPage } from './pages/ReportsPage';
 
 export function App() {
+  const pagesBase =
+    import.meta.env.BASE_URL.length > 1 && import.meta.env.BASE_URL.endsWith('/')
+      ? import.meta.env.BASE_URL.slice(0, -1)
+      : import.meta.env.BASE_URL;
+
   return (
     <FleetProvider>
-      <BrowserRouter basename={import.meta.env.BASE_URL}>
+      <BrowserRouter basename={pagesBase}>
         <div className="container-fluid px-0">
           <header className="sticky-top border-bottom" style={{ zIndex: 5000 }}>
             <div className="bg-dark">
