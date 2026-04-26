@@ -47,6 +47,8 @@ type VehicleState = {
   patrolPhase: number;
   stopUntilTs: number;
   spawnTs: number;
+  /** Adds "already flown" minutes so flightMin matches synthetic route history. */
+  flightOffsetMin: number;
   enduranceMs: number;
   state: 'active' | 'missing';
   missingReason: 'linkLost' | 'destroyed' | null;
@@ -116,10 +118,12 @@ function buildImaginaryPastRoute(
 function assignRoutePolyline(v: VehicleState) {
   if (Math.random() >= 0.4) {
     v.routePolyline = null;
+    v.flightOffsetMin = 0;
     return;
   }
   const durationMin = 10 + Math.random() * 5;
   v.routePolyline = buildImaginaryPastRoute(v.lng, v.lat, v.headingRad, v.speedMps, durationMin);
+  v.flightOffsetMin = Math.round(durationMin);
 }
 
 function syncRoutePolylineTail(v: VehicleState) {
@@ -473,6 +477,7 @@ function initVehicles() {
       patrolPhase: Math.random() * Math.PI * 2,
       stopUntilTs: 0,
       spawnTs: Date.now(),
+      flightOffsetMin: 0,
       enduranceMs,
       state: 'active',
       missingReason: null,
@@ -520,7 +525,7 @@ function start() {
       step(v, dtSec, ts, center);
       const enduranceMinTotal = Math.round(v.enduranceMs / 60_000);
       const enduranceMinLeft = Math.max(0, Math.round((v.enduranceMs - (ts - v.spawnTs)) / 60_000));
-      const flightMin = Math.max(0, Math.round((ts - v.spawnTs) / 60_000));
+      const flightMin = Math.max(0, v.flightOffsetMin + Math.round((ts - v.spawnTs) / 60_000));
       const u: DemoFleetUpdate = {
         id: v.id,
         kind: v.kind,
